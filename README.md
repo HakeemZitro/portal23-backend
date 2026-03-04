@@ -1,2 +1,2 @@
 # portal23-backend
-Aplicación de cursos online, para convertirte en maestro de Ceremonias Hólisticas
+Repositorio para el BackEnd de la aplicación de cursos online, para convertirte en maestro de Ceremonias Hólisticas "PORTAL 23"

@@ -54,7 +54,7 @@ module.exports.getUserInfo = (req, res, next) => {
 module.exports.updateUserInfo = (req, res, next) => {
   const { name } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { name }, { new: true, runValidators: true })
+  User.findByIdAndUpdate(req.user._id, { name }, { returnDocument: "after", runValidators: true })
     .orFail(() => { throw new UnauthorizedError("Sin autorización, inicia sesión") })
     .then(updatedUser => res.send(updatedUser))
     .catch(err => {
@@ -69,7 +69,7 @@ module.exports.updateUserInfo = (req, res, next) => {
 module.exports.updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+  User.findByIdAndUpdate(req.user._id, { avatar }, { returnDocument: "after", runValidators: true })
     .orFail(() => { throw new UnauthorizedError("Sin autorización, inicia sesión") })
     .then(updatedUser => res.send(updatedUser))
     .catch(err => {

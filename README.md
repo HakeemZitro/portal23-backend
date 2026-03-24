@@ -77,7 +77,7 @@ Crea o edita el archivo `.env.development` en la raíz del proyecto con los sigu
 NODE_ENV=development
 
 # Servidor
-PORT=3000
+PORT=4000
 
 # Base de datos
 DB_URL=mongodb://localhost:27017/alquimia-digital

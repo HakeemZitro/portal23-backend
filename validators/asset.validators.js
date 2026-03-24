@@ -12,4 +12,5 @@ const idParams = Joi.object({
   id,
 });
 
+
 module.exports = { authHeaders, idParams };

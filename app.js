@@ -4,14 +4,14 @@ require("dotenv").config({ path: ".env.development" });
 const { PORT, DB_URL } = process.env;
 
 
-const usersRouter = require("./routes/users.js");
-const assetsRouter = require("./routes/assets.js");
-const { handleMuxWebhook } = require("./controllers/webhooks.js");
-const { login, createUser } = require("./controllers/users.js");
+const usersRouter = require("./routes/user.routes.js");
+const assetsRouter = require("./routes/asset.routes.js");
+const { handleMuxWebhook } = require("./controllers/webhooks.controller.js");
+const { login, createUser } = require("./controllers/users.controller.js");
 const { celebrate, Segments, errors } = require("celebrate");
 const { createUserBody, loginBody } = require("./validators/auth.validators.js");
 const NotFoundError = require("./errors/not-found-err.js");
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require("./middlewares/logger.js");
 
 //Configuración de CORS
 const cors = require("cors");

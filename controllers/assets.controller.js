@@ -2,7 +2,9 @@ const Asset = require("../models/asset");
 const { MUX_TokenID, MUX_SecretKEY } = process.env;
 
 
-//Crear URL de subida para nuevo asset en MUX y lo registra en base de datos
+// ----- Controladores para assets ----- //
+
+// ----- Crear URL de subida para nuevo asset en MUX y lo registra en base de datos ----- //
 module.exports.createUploadAssetURL = (req, res) => {
   fetch("https://api.mux.com/video/v1/uploads", {
     method: "POST",
@@ -27,8 +29,8 @@ module.exports.createUploadAssetURL = (req, res) => {
 };
 
 
-//Obtener todos los assets de MUX
-exports.getAllAssets = (req, res) => {
+// ----- Obtener todos los assets de MUX ----- //
+module.exports.getAllAssets = (req, res) => {
   fetch("https://api.mux.com/video/v1/assets", {
     method: "GET",
     headers: {
@@ -42,8 +44,8 @@ exports.getAllAssets = (req, res) => {
 };
 
 
-//Obtener assets de un modulo
-exports.getAssetsByModule = (req, res) => {
+// ----- Obtener assets de un modulo ----- //
+module.exports.getAssetsByModule = (req, res) => {
   const { moduleId } = req.params;
 
   Asset.find({ moduleId })
@@ -53,8 +55,8 @@ exports.getAssetsByModule = (req, res) => {
 };
 
 
-//Obtener un asset por ID
-exports.getAssetById = (req, res) => {
+// ----- Obtener un asset por ID ----- //
+module.exports.getAssetById = (req, res) => {
   const { id } = req.params;
 
   Asset.findById(id)

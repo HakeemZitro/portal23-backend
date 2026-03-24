@@ -1,9 +1,9 @@
 const assetsRouter = require("express").Router();
 const { celebrate, Segments } = require("celebrate");
 
-const { auth, adminAuth } = require("../middlewares/auth");
+const { auth, adminAuth } = require("../middlewares/auth.js");
 const { authHeaders, idParams } = require("../validators/asset.validators.js");
-const { createUploadAssetURL, getAllAssets, getAssetById } = require("../controllers/assets");
+const { createUploadAssetURL, getAllAssets, getAssetById } = require("../controllers/assets.controller.js");
 
 
 // ----- Rutas para assets ----- //

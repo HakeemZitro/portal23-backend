@@ -3,7 +3,7 @@ const { celebrate, Segments } = require("celebrate");
 
 const { auth, adminAuth } = require("../middlewares/auth.js");
 const { authHeaders, idParams, userInfoBody, userAvatarBody } = require("../validators/user.validators.js");
-const { getUsers, getUserById, getUserInfo, updateUserInfo, updateUserAvatar } = require("../controllers/users.js");
+const { getUsers, getUserById, getUserInfo, updateUserInfo, updateUserAvatar } = require("../controllers/users.controller.js");
 
 
 // ----- Rutas para usuarios ----- //

@@ -4,11 +4,14 @@ const { MUX_WEBHOOK_SECRET } = process.env;
 
 const mux = new Mux();
 
-//Webhook para manejar eventos de Mux
-exports.handleMuxWebhook = (req, res) => {
+
+// ----- Controladores para webhooks ----- //
+
+// ----- Webhook para manejar eventos de Mux ----- //
+module.exports.handleMuxWebhook = (req, res) => {
   let event;
 
-  //Validar firma de Mux
+  // Validar firma de Mux
   try {
     const rawBody = req.body;
     const signature = req.headers["mux-signature"];
@@ -21,7 +24,7 @@ exports.handleMuxWebhook = (req, res) => {
 
   console.log("Evento MUX válido:", event.type);
 
-  //Evento cuando se crea un asset en Mux
+  // Evento cuando se crea un asset en Mux
   if (event.type === "video.upload.asset_created") {
     Asset.findOne({ upload_id: event.data.id })
     .then(asset => {
@@ -35,7 +38,7 @@ exports.handleMuxWebhook = (req, res) => {
     .catch(err => { console.error(err); res.sendStatus(500); });
   }
   
-  //Evento cuando el asset esta listo para reproducirse
+  // Evento cuando el asset esta listo para reproducirse
   else if (event.type === "video.asset.ready") {
     Asset.findOne({ asset_id: event.data.id })
       .then(asset => {

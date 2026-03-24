@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
 const { JWT_SECRET } = process.env;
 
-const UnauthorizedError = require("../errors/unauthorized-err.js");
-const ForbiddenError = require("../errors/forbidden-err.js");
+const UnauthorizedError = require("../errors/unauthorized.error.js");
+const ForbiddenError = require("../errors/forbidden.error.js");
 
 
 // ----- Confirma autorizacion mediante token ----- //

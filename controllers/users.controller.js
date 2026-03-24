@@ -3,10 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, JWT_ACCESS_EXPIRES_IN, BCRYPT_ROUNDS } = process.env;
 
-const BadRequestError = require("../errors/bad-request-err.js");
-const UnauthorizedError = require("../errors/unauthorized-err.js");
-const NotFoundError = require("../errors/not-found-err.js");
-const ConflictError = require("../errors/conflict-err.js");
+const BadRequestError = require("../errors/bad-request.error.js");
+const UnauthorizedError = require("../errors/unauthorized.error.js");
+const NotFoundError = require("../errors/not-found.error.js");
+const ConflictError = require("../errors/conflict.error.js");
 
 
 // ----- Controladores para usuarios ----- //

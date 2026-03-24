@@ -10,7 +10,7 @@ const { handleMuxWebhook } = require("./controllers/webhooks.controller.js");
 const { login, createUser } = require("./controllers/users.controller.js");
 const { celebrate, Segments, errors } = require("celebrate");
 const { createUserBody, loginBody } = require("./validators/auth.validators.js");
-const NotFoundError = require("./errors/not-found-err.js");
+const NotFoundError = require("./errors/not-found.error.js");
 const { requestLogger, errorLogger } = require("./middlewares/logger.js");
 
 //Configuración de CORS
@@ -25,8 +25,8 @@ var corsOptions = {
     }
     return callback(null, true);
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'authorization'],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "authorization"],
 }
 
 

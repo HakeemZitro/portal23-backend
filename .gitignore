@@ -14,6 +14,9 @@ node_modules
 .idea
 .vscode
 .env
+.env.development
+.env.production
+seedAdmin.js
 
 # Archivos que no se deben mover de GitHub
 frontend

@@ -15,6 +15,7 @@ module.exports.createUploadAssetURL = (req, res, next) => {
     },
     body: JSON.stringify({
       cors_origin: "*",
+      timeout: 7200,
       new_asset_settings: {
         playback_policies: ["public"],
         max_resolution_tier: "1080p",

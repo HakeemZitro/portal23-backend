@@ -35,7 +35,15 @@ module.exports.login = (req, res, next) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      res.send({ token: jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: JWT_ACCESS_EXPIRES_IN }) });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: JWT_ACCESS_EXPIRES_IN });
+
+      res.cookie("session_token", token, {
+        httpOnly: true,
+        sameSite: "Lax",
+        secure: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .send({ message: "Inicio de sesión exitoso" });
     })
     .catch(() => {
       next(new UnauthorizedError("Email o contraseña incorrecto"));
@@ -99,4 +107,9 @@ module.exports.getUserById = (req, res, next) => {
     .orFail(() => { throw new NotFoundError("No se encontro al usuario") })
     .then(user => res.send(user))
     .catch(next);
+};
+
+// ----- Confirmar admin desde frontend ----- //
+module.exports.confirmAdmin = (req, res, next) => {
+  res.status(200).send({ message: "Admin confirmado" });
 };

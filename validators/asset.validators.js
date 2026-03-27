@@ -1,10 +1,10 @@
 const { Joi } = require("celebrate");
-const { authorization, id } = require("./common.js");
+const { session_token, id } = require("./common.js");
 
 
 // ----- Validaciones para headers ----- //
-const authHeaders = Joi.object({
-  authorization,
+const authCookie = Joi.object({
+  session_token,
 }).unknown(true);
 
 // ----- Validaciones para parámetros ----- //
@@ -13,4 +13,4 @@ const idParams = Joi.object({
 });
 
 
-module.exports = { authHeaders, idParams };
+module.exports = { authCookie, idParams };

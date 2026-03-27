@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 require("dotenv").config({ path: ".env.development" });
 const { PORT, DB_URL } = process.env;
 
@@ -27,6 +28,7 @@ var corsOptions = {
   },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "authorization"],
+  credentials: true,
 }
 
 
@@ -42,6 +44,7 @@ app.post("/webhooks/mux", express.raw({ type: "application/json" }), handleMuxWe
 app.use(cors(corsOptions));
 
 // ----- Middlewares para el análisis del cuerpo ----- //
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -49,10 +52,10 @@ app.use(express.json());
 app.use(requestLogger);
 
 // ----- Rutas de Inicio de Sesión y Registro con validación de datos ----- //
-app.post("/signup", celebrate({
+app.post("/register", celebrate({
   [Segments.BODY]: createUserBody,
 }), createUser);
-app.post("/signin", celebrate({
+app.post("/login", celebrate({
   [Segments.BODY]: loginBody,
 }), login);
 

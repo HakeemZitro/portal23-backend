@@ -6,15 +6,13 @@ const UnauthorizedError = require("../errors/unauthorized.error.js");
 const ForbiddenError = require("../errors/forbidden.error.js");
 
 
-// ----- Confirma autorizacion mediante token ----- //
+// ----- Confirma autorizacion mediante cookie ----- //
 module.exports.auth = (req, res, next) => {
-  const { authorization } = req.headers;
+  const token = req.cookies.session_token;
 
-  if (!authorization) {
+  if (!token) {
     return next(new UnauthorizedError("Sin autorización, inicia sesión"));
   }
-
-  const token = authorization.replace("Bearer ", "");
 
   let payload;
 

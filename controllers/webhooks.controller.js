@@ -13,10 +13,8 @@ module.exports.handleMuxWebhook = (req, res) => {
 
   // Validar firma de Mux
   try {
-    const rawBody = req.body;
-    const signature = req.headers["mux-signature"];
-
-    event = mux.webhooks.verifySignature(rawBody, signature, MUX_WEBHOOK_SECRET);
+    const rawBody = req.body.toString();
+    event = mux.webhooks.unwrap(rawBody, req.headers, MUX_WEBHOOK_SECRET);
   } catch (err) {
     console.error("Firma de Mux inválida:", err.message);
     return res.sendStatus(400);

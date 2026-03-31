@@ -1,6 +1,11 @@
 const { Joi } = require("celebrate");
-const { name, email, password } = require("./common.js");
+const { name, email, password, session_token } = require("./common.js");
 
+
+// ----- Validaciones para cerrar sesión ----- //
+const logoutCookies = Joi.object({
+  session_token,
+}).unknown(true);
 
 // ----- Validaciones para crear usuario ----- //
 const createUserBody = Joi.object({
@@ -16,4 +21,4 @@ const loginBody = Joi.object({
 });
 
 
-module.exports = { createUserBody, loginBody };
+module.exports = { createUserBody, loginBody, logoutCookies };

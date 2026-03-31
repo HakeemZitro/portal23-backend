@@ -34,6 +34,10 @@ const assetSchema = new mongoose.Schema({
   order: {
     type: Number,
     default: 0
+  },
+  expiresAt: {
+    type: Date,
+    expires: 0
   }
 }, { timestamps: true });
 

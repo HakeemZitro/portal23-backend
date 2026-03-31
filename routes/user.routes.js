@@ -30,9 +30,6 @@ usersRouter.get("/users/:id", auth, adminAuth, celebrate({
   [Segments.PARAMS]: idParams,
 }), getUserById);
 
-usersRouter.get("/users/confirm-admin", auth, adminAuth, celebrate({
-  [Segments.COOKIES]: authCookie,
-}), confirmAdmin);
 
 
 module.exports = usersRouter;

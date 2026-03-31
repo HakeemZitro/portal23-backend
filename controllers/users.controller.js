@@ -52,7 +52,7 @@ module.exports.login = (req, res, next) => {
 
 // ----- Obtener informacion de usuario actual ----- //
 module.exports.getUserInfo = (req, res, next) => {
-  User.findById(req.user._id)
+  User.findById(req.user._id).select("+role")
     .orFail(() => { throw new UnauthorizedError("Sin autorización, inicia sesión") })
     .then(user => res.send(user))
     .catch(next);
@@ -109,7 +109,3 @@ module.exports.getUserById = (req, res, next) => {
     .catch(next);
 };
 
-// ----- Confirmar admin desde frontend ----- //
-module.exports.confirmAdmin = (req, res, next) => {
-  res.status(200).send({ message: "Admin confirmado" });
-};

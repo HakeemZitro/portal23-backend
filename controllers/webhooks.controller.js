@@ -26,7 +26,7 @@ module.exports.handleMuxWebhook = (req, res) => {
   if (event.type === "video.upload.asset_created") {
     Asset.findOne({ upload_id: event.data.id })
     .then(asset => {
-      if (!asset) { throw new Error("Asset no encontrado"); }
+      if (!asset) { throw new Error("Asset no encontrado para upload_id: " + event.data.id); }
       return Asset.findOneAndUpdate({ upload_id: event.data.id }, { 
           asset_id: event.data.asset_id, 
           status: "processing", 
@@ -34,16 +34,19 @@ module.exports.handleMuxWebhook = (req, res) => {
         });
     })
     .then(() => { res.sendStatus(200); })
-    .catch(err => { console.error(err); res.sendStatus(500); });
+    .catch(err => { 
+      console.error("Error en video.upload.asset_created:", err); 
+      res.status(500).send(err.message); 
+    });
   }
   
   // Evento cuando el asset esta listo para reproducirse
   else if (event.type === "video.asset.ready") {
     Asset.findOne({ asset_id: event.data.id })
       .then(asset => {
-        if (!asset) { throw new Error("Asset no encontrado"); }
+        if (!asset) { throw new Error("Asset no encontrado para asset_id: " + event.data.id); }
         return Asset.findOneAndUpdate({ asset_id: event.data.id }, {
-          title: event.data.meta.title,
+          title: event.data.meta?.title || "Sin título",
           playback_id: event.data.playback_ids?.[0]?.id, 
           type: event.data.resolution_tier === "audio-only" ? "Audio" : "Video",
           duration: Math.floor(event.data.duration), 
@@ -51,7 +54,10 @@ module.exports.handleMuxWebhook = (req, res) => {
         });
       })
       .then(() => { res.sendStatus(200); })
-      .catch(err => { console.error(err); res.sendStatus(500); });
+      .catch(err => { 
+        console.error("Error en video.asset.ready:", err); 
+        res.status(500).send(err.message); 
+      });
   }
 
   else { console.log("Evento no manejado:", event.type); res.sendStatus(200); }

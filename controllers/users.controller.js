@@ -39,15 +39,26 @@ module.exports.login = (req, res, next) => {
 
       res.cookie("session_token", token, {
         httpOnly: true,
-        sameSite: "Lax",
+        sameSite: "none",
         secure: true,
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .send({ message: "Inicio de sesión exitoso" });
     })
-    .catch(() => {
-      next(new UnauthorizedError("Email o contraseña incorrecto"));
-    });
+    .catch(() => { next(new UnauthorizedError("Email o contraseña incorrecto")); });
+}
+
+// ----- Cierre de Sesión ----- //
+module.exports.logout = (req, res, next) => {
+  res.clearCookie("session_token", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+    path: "/"
+  })
+    .send({ message: "Sesión cerrada exitosamente" })
+    .catch(next);
 }
 
 // ----- Obtener informacion de usuario actual ----- //

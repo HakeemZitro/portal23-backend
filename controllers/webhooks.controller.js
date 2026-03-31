@@ -32,6 +32,7 @@ module.exports.handleMuxWebhook = (req, res) => {
       return Asset.findOneAndUpdate({ upload_id: event.data.id }, { 
           asset_id: event.data.asset_id, 
           status: "processing", 
+          $unset: { expiresAt: 1 }
         });
     })
     .then(() => { res.sendStatus(200); })

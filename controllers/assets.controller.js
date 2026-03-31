@@ -15,7 +15,7 @@ module.exports.createUploadAssetURL = (req, res, next) => {
     },
     body: JSON.stringify({
       cors_origin: "*",
-      timeout: 7200,
+      timeout: 3600,
       new_asset_settings: {
         playback_policies: ["public"],
         max_resolution_tier: "1080p",
@@ -24,8 +24,9 @@ module.exports.createUploadAssetURL = (req, res, next) => {
     })
   })
   .then(res => res.json())
-  .then(data => { return Asset.create({ upload_id: data.data.id, status: data.data.status })
-    .then(asset => { res.send({ upload_url: data.data.url, upload_id: data.data.id }); }); 
+  .then(data => { 
+    return Asset.create({ upload_id: data.data.id, status: data.data.status, expiresAt: new Date(Date.now() + 3600 * 1000) })
+      .then(asset => { res.send({ upload_url: data.data.url, upload_id: data.data.id }); }); 
   })
   .catch(err => next(err));
 };

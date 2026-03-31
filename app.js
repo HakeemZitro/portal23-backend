@@ -8,10 +8,11 @@ const { PORT, DB_URL } = process.env;
 const usersRouter = require("./routes/user.routes.js");
 const assetsRouter = require("./routes/asset.routes.js");
 const { handleMuxWebhook } = require("./controllers/webhooks.controller.js");
-const { login, createUser } = require("./controllers/users.controller.js");
+const { login, createUser, logout } = require("./controllers/users.controller.js");
 const { celebrate, Segments, errors } = require("celebrate");
-const { createUserBody, loginBody } = require("./validators/auth.validators.js");
+const { createUserBody, loginBody, logoutCookies } = require("./validators/auth.validators.js");
 const NotFoundError = require("./errors/not-found.error.js");
+const { auth } = require("./middlewares/auth.js");
 const { requestLogger, errorLogger } = require("./middlewares/logger.js");
 
 //Configuración de CORS
@@ -58,6 +59,9 @@ app.post("/register", celebrate({
 app.post("/login", celebrate({
   [Segments.BODY]: loginBody,
 }), login);
+app.post("/logout", auth, celebrate({
+  [Segments.COOKIES]: logoutCookies,
+}), logout);
 
 // ----- Rutas protegidas por autenticación (usuarios y assets) ----- //
 app.use("/", usersRouter);

@@ -16,7 +16,7 @@ const { requestLogger, errorLogger } = require("./middlewares/logger.js");
 
 //Configuración de CORS
 const cors = require("cors");
-const allowedOrigins = [/*"https://around.hzitro.dev", "https://www.around.hzitro.dev", "https://api.around.hzitro.dev",*/ "http://localhost:3210"];
+const allowedOrigins = ["http://localhost:3210", "https://hakeemzitro.github.io/portal23-frontend"];
 var corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);

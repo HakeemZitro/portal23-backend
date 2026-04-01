@@ -34,16 +34,10 @@ module.exports.createUploadAssetURL = (req, res, next) => {
 
 // ----- Obtener todos los assets de MUX ----- //
 module.exports.getAllAssets = (req, res, next) => {
-  fetch("https://api.mux.com/video/v1/assets", {
-    method: "GET",
-    headers: {
-      "Authorization": `Basic ${Buffer.from(MUX_TokenID+":"+MUX_SecretKEY).toString("base64")}`,
-      "Content-Type": "application/json"
-    }
-  })
-  .then(response => response.json())
-  .then(data => res.send(data.data))
-  .catch(err => next(err));
+  Asset.find({status: "ready"})
+    .orFail(() => { throw new NotFoundError("No se encontraron assets")})
+    .then(assets => res.send(assets))
+    .catch(next);
 };
 
 

@@ -104,10 +104,10 @@ module.exports.updateUserAvatar = (req, res, next) => {
 
 // ----- Obtener todos los usuarios ----- //
 module.exports.getUsers = (req, res, next) => {
-  User.find({})
-  .orFail(() => { throw new NotFoundError("No se encontraron usuarios") })
-  .then((users) => res.send(users))
-  .catch(next);
+  User.find({}).select("+role")
+    .orFail(() => { throw new NotFoundError("No se encontraron usuarios") })
+    .then((users) => res.send(users))
+    .catch(next);
 };
 
 // ----- Obtener un usuario por ID ----- //

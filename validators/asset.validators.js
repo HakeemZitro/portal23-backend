@@ -12,5 +12,9 @@ const idParams = Joi.object({
   id,
 });
 
+// ----- Validaciones para body ----- //
+const uploadAssetBody = Joi.object({
+  title: Joi.string().required().min(2).max(100),
+});
 
-module.exports = { authCookie, idParams };
+module.exports = { authCookie, idParams, uploadAssetBody };

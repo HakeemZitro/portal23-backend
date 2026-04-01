@@ -2,7 +2,7 @@ const assetsRouter = require("express").Router();
 const { celebrate, Segments } = require("celebrate");
 
 const { auth, adminAuth } = require("../middlewares/auth.js");
-const { authCookie, idParams } = require("../validators/asset.validators.js");
+const { authCookie, idParams, uploadAssetBody } = require("../validators/asset.validators.js");
 const { createUploadAssetURL, getAllAssets, getAssetById } = require("../controllers/assets.controller.js");
 
 
@@ -18,6 +18,7 @@ assetsRouter.get("/assets/:id", auth, celebrate({
 
 assetsRouter.post("/assets/upload-url", auth, adminAuth, celebrate({
   [Segments.COOKIES]: authCookie,
+  [Segments.BODY]: uploadAssetBody,
 }), createUploadAssetURL);
 
 

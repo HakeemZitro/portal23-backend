@@ -7,6 +7,8 @@ const NotFoundError = require("../errors/not-found.error.js");
 
 // ----- Crear URL de subida para nuevo asset en MUX y lo registra en base de datos ----- //
 module.exports.createUploadAssetURL = (req, res, next) => {
+  const { title } = req.body;
+
   fetch("https://api.mux.com/video/v1/uploads", {
     method: "POST",
     headers: {
@@ -25,7 +27,7 @@ module.exports.createUploadAssetURL = (req, res, next) => {
   })
   .then(res => res.json())
   .then(data => { 
-    return Asset.create({ upload_id: data.data.id, status: data.data.status, expiresAt: new Date(Date.now() + 3600 * 1000) })
+    return Asset.create({ title, upload_id: data.data.id, status: data.data.status, expiresAt: new Date(Date.now() + 3600 * 1000) })
       .then(asset => { res.send({ upload_url: data.data.url, upload_id: data.data.id }); }); 
   })
   .catch(err => next(err));

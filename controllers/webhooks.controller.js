@@ -46,7 +46,7 @@ module.exports.handleMuxWebhook = (req, res) => {
       .then(asset => {
         if (!asset) { throw new Error("Asset no encontrado para asset_id: " + event.data.id); }
         return Asset.findOneAndUpdate({ asset_id: event.data.id }, {
-          title: event.data.meta?.title || "Sin título - Espere a que se actualice",
+          title: asset.title || "Sin título - Espere a que se actualice",
           playback_id: event.data.playback_ids?.[0]?.id, 
           type: event.data.resolution_tier === "audio-only" ? "Audio" : "Video",
           duration: Math.floor(event.data.duration), 
